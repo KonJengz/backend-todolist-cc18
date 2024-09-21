@@ -18,4 +18,10 @@ authService.createUser = (data) => {
   });
 };
 
+authService.findUserById = (id) => {
+  return prisma.user.findFirst({
+    where: { id },
+  });
+};
+
 module.exports = authService;
