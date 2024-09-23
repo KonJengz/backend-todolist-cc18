@@ -6,6 +6,7 @@ const todoController = {};
 todoController.getAlltodoByUserId = async (req, res, next) => {
   try {
     const userId = +req.params.userId;
+    console.log("userId---", userId);
 
     if (isNaN(userId)) {
       return createError(400, "user id incorrect type");
