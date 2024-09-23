@@ -1,4 +1,5 @@
 const authService = require("../services/auth-service");
+const emailService = require("../services/email-service");
 const hashService = require("../services/hash-service");
 const jwtService = require("../services/jwt-service");
 const createError = require("../utils/create-error");
@@ -68,6 +69,27 @@ authController.login = async (req, res, next) => {
     const accessToken = jwtService.sign({ id: existUser.id });
 
     res.status(200).json({ accessToken });
+  } catch (error) {
+    next(error);
+  }
+};
+
+authController.forgetPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+
+    // const existUser = await authService.findUserbyEmail(email);
+
+    // if (!existUser) {
+    //   return createError(400, "email not found");
+    // }
+
+    console.log("first---------");
+
+    const sendEmail = await emailService.sendEmail(email, "Reset Password");
+    console.log("sendEmail", sendEmail);
+
+    res.status(200).json({ message: "send Email success" });
   } catch (error) {
     next(error);
   }
